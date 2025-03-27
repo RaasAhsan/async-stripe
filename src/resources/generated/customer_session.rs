@@ -59,6 +59,10 @@ pub struct CustomerSessionResourceComponents {
     pub buy_button: CustomerSessionResourceComponentsResourceBuyButton,
 
     pub pricing_table: CustomerSessionResourceComponentsResourcePricingTable,
+
+    /// Configuration for the payment element.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub payment_element: Option<CreateCustomerSessionComponentsPaymentElement>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
@@ -71,6 +75,29 @@ pub struct CustomerSessionResourceComponentsResourceBuyButton {
 pub struct CustomerSessionResourceComponentsResourcePricingTable {
     /// Whether the pricing table is enabled.
     pub enabled: bool,
+}
+
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+pub struct CreateCustomerSessionComponentsPaymentElement {
+    pub enabled: bool,
+
+    pub features: Option<CreateCustomerSessionComponentsPaymentElementFeatures>,
+}
+
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+pub struct CreateCustomerSessionComponentsPaymentElementFeatures {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub payment_method_allow_redisplay_filters: Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub payment_method_redisplay: Option<FeatureStatus>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub payment_method_redisplay_limit: Option<i32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub payment_method_remove: Option<FeatureStatus>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub payment_method_save: Option<FeatureStatus>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub payment_method_save_usage: Option<crate::PaymentIntentSetupFutureUsage>,
 }
 
 /// The parameters for `CustomerSession::create`.
@@ -116,4 +143,32 @@ pub struct CreateCustomerSessionComponentsBuyButton {
 pub struct CreateCustomerSessionComponentsPricingTable {
     /// Whether the pricing table is enabled.
     pub enabled: bool,
+}
+
+#[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
+#[serde(rename_all = "snake_case")]
+pub enum FeatureStatus {
+    Disabled,
+    Enabled,
+}
+
+impl FeatureStatus {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            FeatureStatus::Disabled => "disabled",
+            FeatureStatus::Enabled => "enabled",
+        }
+    }
+}
+
+impl AsRef<str> for FeatureStatus {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+
+impl std::fmt::Display for FeatureStatus {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        self.as_str().fmt(f)
+    }
 }
