@@ -9253,33 +9253,5 @@ pub struct CreateCheckoutSessionSavedPaymentMethodOptions {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub allow_redisplay_filters: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub payment_method_save: Option<FeatureStatus>,
-}
-
-#[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
-#[serde(rename_all = "snake_case")]
-pub enum FeatureStatus {
-    Disabled,
-    Enabled,
-}
-
-impl FeatureStatus {
-    pub fn as_str(self) -> &'static str {
-        match self {
-            FeatureStatus::Disabled => "disabled",
-            FeatureStatus::Enabled => "enabled",
-        }
-    }
-}
-
-impl AsRef<str> for FeatureStatus {
-    fn as_ref(&self) -> &str {
-        self.as_str()
-    }
-}
-
-impl std::fmt::Display for FeatureStatus {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        self.as_str().fmt(f)
-    }
+    pub payment_method_save: Option<String>,
 }
