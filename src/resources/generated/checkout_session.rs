@@ -226,9 +226,6 @@ pub struct CheckoutSession {
     /// If you’re using [Custom Domains](https://stripe.com/docs/payments/checkout/custom-domains), the URL will use your subdomain.
     /// Otherwise, it’ll use `checkout.stripe.com.` This value is only present when the session is active.
     pub url: Option<String>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub saved_payment_method_options: Option<CreateCheckoutSessionSavedPaymentMethodOptions>,
 }
 
 impl CheckoutSession {
@@ -1387,6 +1384,9 @@ pub struct CreateCheckoutSession<'a> {
     /// The default is `hosted`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub ui_mode: Option<CheckoutSessionUiMode>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub saved_payment_method_options: Option<CreateCheckoutSessionSavedPaymentMethodOptions>,
 }
 
 impl<'a> CreateCheckoutSession<'a> {
