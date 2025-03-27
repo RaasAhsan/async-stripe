@@ -59,10 +59,6 @@ pub struct CustomerSessionResourceComponents {
     pub buy_button: CustomerSessionResourceComponentsResourceBuyButton,
 
     pub pricing_table: CustomerSessionResourceComponentsResourcePricingTable,
-
-    /// Configuration for the payment element.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub payment_element: Option<CreateCustomerSessionComponentsPaymentElement>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
@@ -131,6 +127,10 @@ pub struct CreateCustomerSessionComponents {
     /// Configuration for the pricing table.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub pricing_table: Option<CreateCustomerSessionComponentsPricingTable>,
+
+    /// Configuration for the payment element.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub payment_element: Option<CreateCustomerSessionComponentsPaymentElement>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
