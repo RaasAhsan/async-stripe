@@ -1430,6 +1430,7 @@ impl<'a> CreateCheckoutSession<'a> {
             success_url: Default::default(),
             tax_id_collection: Default::default(),
             ui_mode: Default::default(),
+            saved_payment_method_options: Default::default(),
         }
     }
 }
